@@ -9,6 +9,7 @@ public class ToiletMovement : MonoBehaviour
     private Transform[] _points;
     private int _currentPoint = 0;
     private float _speed = 3.5f;
+    private float _speedRotation = 1f;
 
     private void Start()
     {
@@ -19,6 +20,7 @@ public class ToiletMovement : MonoBehaviour
     {
         Move();
         QuaternionToPoints();
+        GetNewPoint();
     }
 
     private void GetChildPath()
@@ -34,7 +36,10 @@ public class ToiletMovement : MonoBehaviour
     private void Move()
     {
         transform.position = Vector3.MoveTowards(transform.position, _points[_currentPoint].position, _speed * Time.deltaTime);
+    }
 
+    private void GetNewPoint()
+    {
         if (transform.position == _points[_currentPoint].position)
         {
             _currentPoint++;
@@ -48,6 +53,6 @@ public class ToiletMovement : MonoBehaviour
     {
         Vector3 direction = _points[_currentPoint].position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 1f * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _speedRotation * Time.deltaTime);
     }
 }

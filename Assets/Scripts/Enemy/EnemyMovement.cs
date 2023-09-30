@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private Transform _target;
+    private readonly float _speedMove = 3f;
+    private readonly float _speedRotate = 1f;
 
     private void Update()
     {
@@ -19,13 +21,13 @@ public class EnemyMovement : MonoBehaviour
 
     private void MoveToTarget()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _target.position, 3f * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, _speedMove * Time.deltaTime);
     }
 
     private void RotationEnemyToTarget()
     {
         Vector3 target = _target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(target);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 1f * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _speedRotate * Time.deltaTime);
     }
 }
